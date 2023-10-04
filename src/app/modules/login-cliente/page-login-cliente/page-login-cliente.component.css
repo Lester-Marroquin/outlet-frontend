@@ -1,0 +1,35 @@
+.login-auth-page {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-4);
+    color: var(--color-3);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.login-auth-page .login-auth-wrapper {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-auth-page .login-auth-form {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+input.ng-invalid.ng-touched {
+    border: solid 1px red !important
+}
+
+input.ng-valid{
+    border: solid 1px green !important
+}

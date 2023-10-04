@@ -1,0 +1,36 @@
+<div class="login-auth-page">
+  <div class="login-auth-wrapper">
+    <h3>Bienvenido a</h3>
+    <h4>Outlet Los Mancilla</h4>
+    <hr color="blue">
+    
+    <form (ngSubmit)="loginCliente()" [formGroup]="formularioLogin" class="login-auth-form">
+      
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input formControlName="UsuarioID" type="email" class="form-control" placeholder="nombre@ejemplo.com">
+      </div>
+
+      <div class="mb-3">
+        <label for="clave" class="form-label">Contraseña</label>
+        <input formControlName="ClaveUsuario" type="password" class="form-control">
+        <span id="ClaveUsuarioSpan" class="form-text">
+          Minimo 3 caracteres
+        </span>
+      </div>
+      
+      <div class="form-steps">
+        <a class="link" href="">¿Se te ha olvidado la contraseña?</a>
+      </div>
+      
+      <div>Ocurrio un error con tu email o password</div>
+      
+      <br>
+      <div class="form-action">
+        <button [disabled]="formularioLogin.invalid" type="submit" class="btn btn-success">Iniciar sesión</button>
+      </div>
+    
+    </form>
+  </div>
+</div>
+

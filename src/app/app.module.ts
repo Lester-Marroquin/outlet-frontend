@@ -3,16 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PersonasComponent } from './personas/personas.component';
 
-@NgModule({
+@NgModule({ //TODO: Declaraciones, Componentes, Directivas, Pipes
   declarations: [
     AppComponent,
-    PersonasComponent
   ],
-  imports: [
+  imports: [ //TODO: Solo se importan otros Modulos
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
