@@ -4,13 +4,11 @@
             <div class="row row-cols-1 row-cols-md-2 g-4">
 
                 @if(productoList$ | async; as resultProductoList){
-                <ul>
+                
                     @for(productoItem of resultProductoList.data; track productoItem.Producto){
-                    <li>
+
                         <app-producto-detalle [productoItem]="productoItem"/>
-                    </li>
                     }
-                </ul>
                 }
 
             </div>

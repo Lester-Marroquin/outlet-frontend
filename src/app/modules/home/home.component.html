@@ -14,85 +14,85 @@
   </main>
 </section>
 
-<section>
+<!-- <section>
   <main class="container">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
       <div class="row row-cols-1 row-cols-md-2 g-4">
 
-        <div class="col">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4 order-md-last">
-                <img src="..." class="img-fluid rounded-end" alt="...">
-              </div>
-              <div class="col-md-8 order-md-first">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4 order-md-last">
-                <img src="..." class="img-fluid rounded-end" alt="...">
-              </div>
-              <div class="col-md-8 order-md-first">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4 order-md-last">
-                <img src="..." class="img-fluid rounded-end" alt="...">
-              </div>
-              <div class="col-md-8 order-md-first">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4 order-md-last">
-                <img src="..." class="img-fluid rounded-end" alt="...">
-              </div>
-              <div class="col-md-8 order-md-first">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                    additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </main>
+</section> -->
+
+<section>
+  <main class="container">
+    <div align="center">
+      <h4>Nuestras categorias</h4>
+    </div>
+
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis d-flex justify-content-center  ">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        @if(categoriaList$ | async; as resultCategoriaList){
+        @for(categoriaItem of resultCategoriaList.data; track categoriaItem.CategoriaProducto){
+
+        <!-- <div class="col"> -->
+
+        <div class="circular-card">
+          <div class="image-container">
+            <img src="../../../assets/images/lavadora.jpg" class="card-img-top" alt="...">
+          </div>
+          <div class="card-body">
+            <p class="card-title">{{categoriaItem.CategoriaProducto}}</p>
+          </div>
+        </div>
+
+        <!-- </div> -->
+
+        }
+        }
+
+      </div>
+    </div>
+
+
+  </main>
 </section>
 
+<br>
+
+<section>
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+      <p>Más productos</p>
+
+      <div id="carouselProductos" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+          <!-- Aquí irá el contenido del carrusel -->
+          <div *ngIf="productoList$ | async as resultProductoList" class="carousel-inner">
+            <div *ngFor="let productoItem of resultProductoList.data; let i = index" class="carousel-item"
+              [class.active]="i === 0">
+              <div class="product-card">
+                <h2>{{productoItem.Producto}}</h2>
+                <p>{{productoItem.Observaciones}}</p>
+                <img src="{{productoItem.Imagen}}" alt="Imagen del producto">
+                <p>Precio: {{productoItem.Precio | currency: 'Q'}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductos" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselProductos" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+</section>
