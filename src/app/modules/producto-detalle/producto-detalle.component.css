@@ -1,0 +1,45 @@
+.product-card {
+  /* Configuración del contenedor de la tarjeta */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Ancho de la tarjeta */
+  margin: 20px; /* Margen entre tarjetas */
+  padding: 20px; /* Espacio entre el borde y el contenido */
+}
+
+.product-card img {
+  /* Configuración de la imagen del producto */
+  width: 100%; /* Ancho de la imagen */
+  height: 150px; /* Alto de la imagen */
+  object-fit: cover; /* Ajusta la imagen para que se muestre completa */
+  border-radius: 10px 10px 0 0; /* Esquina superior izquierda y derecha */
+}
+
+.product-card h2 {
+  /* Configuración del título del producto */
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.product-card p {
+  /* Configuración de la descripción del producto */
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.product-card:hover {
+  /* Efecto de hover sobre la tarjeta */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+/* Media queries para pantalla pequeña */
+@media (max-width: 768px) {
+.product-card {
+    width: 100%; /* Ancho de la tarjeta en pantalla pequeña */
+    margin: 10px; /* Margen entre tarjetas en pantalla pequeña */
+  }
+}
