@@ -30,36 +30,54 @@
       <h4>Nuestras categorias</h4>
     </div>
 
-    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis d-flex justify-content-center  ">
-      <div class="row row-cols-1 row-cols-md-2 g-4">
-
-        @if(categoriaList$ | async; as resultCategoriaList){
-        @for(categoriaItem of resultCategoriaList.data; track categoriaItem.CategoriaProducto){
-
-        <!-- <div class="col"> -->
-
-        <div class="circular-card">
-          <div class="image-container">
-            <img src="../../../assets/images/lavadora.jpg" class="card-img-top" alt="...">
-          </div>
-          <div class="card-body">
-            <p class="card-title">{{categoriaItem.CategoriaProducto}}</p>
-          </div>
+      <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis d-flex justify-content-center">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
+            <ng-container *ngFor="let categoriaItem of resultCategoriaList.data; let i = index">
+              <div class="card-container">
+                <div class="circular-card">
+                  <img src="../../../assets/images/imagen{{ i+1 }}.jpg" class="card-img-top" alt="...">
+                </div>
+                <div class="card-body">
+                  <button type="button" class="btn btn-outline-secondary"
+                    (click)="productoPorCategoria(categoriaItem.CodCategoriaProducto)">{{ categoriaItem.CategoriaProducto
+                    }}</button>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
-
-        <!-- </div> -->
-
-        }
-        }
-
       </div>
-    </div>
-
 
   </main>
 </section>
 
+<section *ngIf="seccionProducto">
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <ng-container *ngIf="productoPorCategoriaList$ | async as resultProductoPorCategoriaList">
+          <ng-container *ngFor="let productoItem of resultProductoPorCategoriaList.data; let i = index">
+            <div class="product-card">
+              <h2>{{ productoItem.Producto }}</h2>
+              <p>{{ productoItem.Observaciones }}</p>
+              <!-- <img [src]="productoItem.Imagen" alt="..."> -->
+              <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="...">
+              <p>Precio: {{ productoItem.Precio | currency: 'Q' }}</p>
+              <p class="card-text" align="right"><small class="text-body-secondary">En existencia: {{
+                  productoItem.Cantidad }}</small></p>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </main>
+</section>
+
+
+
 <br>
+
 
 <section>
   <main class="container">
@@ -76,7 +94,8 @@
               <div class="product-card">
                 <h2>{{productoItem.Producto}}</h2>
                 <p>{{productoItem.Observaciones}}</p>
-                <img src="{{productoItem.Imagen}}" alt="Imagen del producto">
+                <!-- <img src="{{productoItem.Imagen}}" alt="Imagen del producto"> -->
+                <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="...">
                 <p>Precio: {{productoItem.Precio | currency: 'Q'}}</p>
               </div>
             </div>

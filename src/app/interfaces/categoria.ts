@@ -1,8 +1,7 @@
 export interface Categoria {
-
-    CodProducto: number;
-    CategoriaProducto: string;
-
+    
+  CodCategoriaProducto: number;
+  CategoriaProducto: string;
 }
 
 export interface CategoriaResult {
