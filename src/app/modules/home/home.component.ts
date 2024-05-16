@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, BehaviorSubject, takeUntil } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of, catchError } from 'rxjs';
 import { ProductoResult } from '../../interfaces/producto';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaResult } from '../../interfaces/categoria';
@@ -13,29 +13,29 @@ import { AsyncPipe, CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   public productoList$!: Observable<ProductoResult>;
   public categoriaList$!: Observable<CategoriaResult>;
   public productoPorCategoriaList$!: Observable<ProductoResult>;
   public seccionProducto!: boolean;
-  private destroy$ = new Subject<void>();
-  private productoPorCategoriaSubject = new BehaviorSubject<ProductoResult[]>(
-    []
-  );
 
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.productoList$ = this.productoService.getAllProducto$();
-    this.categoriaList$ = this.categoriaService.getAllCategoria$();
-  }
+    this.productoList$ = this.productoService.getAllProducto$().pipe(
+      catchError((error) => {
+        return of({ success: false, message: error.message, data: [] });
+      })
+    );
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.categoriaList$ = this.categoriaService.getAllCategoria$().pipe(
+      catchError((error) => {
+        return of({ success: false, message: error.message, data: [] });
+      })
+    );
   }
 
   productoPorCategoria(codCategoriaProducto: number): void {
@@ -43,15 +43,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.seccionProducto = !this.seccionProducto;
     }
 
-    this.productoService
-      .getProductoPorCategoria(codCategoriaProducto)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((productos) => {
-        this.productoPorCategoriaSubject.next([productos]);
-      });
+    this.productoPorCategoriaList$ = this.productoService.getProductoPorCategoria$(codCategoriaProducto).pipe(
+      catchError((error) => { 
+        return of({ success: false, message: error.message, data: [] });
+      })
+    );
   }
 
-  get productoPorCategoriaList(): ProductoResult[] {
-    return this.productoPorCategoriaSubject.value;
-  }
 }

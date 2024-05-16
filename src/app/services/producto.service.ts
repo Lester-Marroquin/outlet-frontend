@@ -2,9 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { Producto, ProductoResult } from '../interfaces/producto';
-import { catchError, map } from 'rxjs/operators';
-import { response } from 'express';
+import { ProductoResult } from '../interfaces/producto';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,23 +13,24 @@ export class ProductoService {
 
   constructor(private http: HttpClient) {}
 
-  getAllProducto$(): Observable<Producto[]> {
+  getAllProducto$(): Observable<ProductoResult> {
     return this.http.get<ProductoResult>(`${this.URL}/producto`).pipe(
-      map(response => response.data),
-      catchError(error => of([]))
+      map((response) => ({
+        success: response.success,
+        message: response.message,
+        data: response.data,
+      }))
     );
   }
 
-  // getProductoId$(id: number): Observable<Producto> {
-  //   return this.http.get<ProductoResult>(`${this.URL}/producto/${id}`);
-  // }
-
-  getProductoPorCategoria(id: number): Observable<Producto[]> {
-    return this.http.get<ProductoResult>(
-      `${this.URL}/productoPorCategoria/${id}`
-    ).pipe(
-      map(response => response.data),
-      catchError(error => of([]))
+  getProductoPorCategoria$(id: number): Observable<ProductoResult> {
+    return this.http.get<ProductoResult>(`${this.URL}/producto/${id}`).pipe(
+      map((response) => ({
+        success: response.success,
+        message: response.message,
+        data: response.data,
+      }))
     );
   }
+
 }

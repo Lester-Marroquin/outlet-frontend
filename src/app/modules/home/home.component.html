@@ -4,7 +4,7 @@
       <div class="image-container">
         <img
           src="https://aws-obg-image-lb-1.tcl.com/content/dam/brandsite/region/in/blog/pc/detail/blog-march/how-to-install-a-washing-machine/pc.jpg"
-          class="rounded" alt="...">
+          class="rounded" alt="Producto de calidad">
       </div>
       <div class="col-lg-6 px-0">
         <h1 class="display-4 fst-italic">Productos de calidad al mejor precio</h1>
@@ -27,45 +27,23 @@
 <section>
   <main class="container">
     <div align="center">
-      <h4>Nuestras categorias</h4>
+      <h4>Nuestras categorías</h4>
     </div>
 
-      <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis d-flex justify-content-center">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
-            <ng-container *ngFor="let categoriaItem of resultCategoriaList.data; let i = index">
-              <div class="card-container">
-                <div class="circular-card">
-                  <img src="../../../assets/images/imagen{{ i+1 }}.jpg" class="card-img-top" alt="...">
-                </div>
-                <div class="card-body">
-                  <button type="button" class="btn btn-outline-secondary"
-                    (click)="productoPorCategoria(categoriaItem.CodCategoriaProducto)">{{ categoriaItem.CategoriaProducto
-                    }}</button>
-                </div>
-              </div>
-            </ng-container>
-          </ng-container>
-        </div>
-      </div>
-
-  </main>
-</section>
-
-<section *ngIf="seccionProducto">
-  <main class="container">
-    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis d-flex justify-content-center">
       <div class="row row-cols-1 row-cols-md-2 g-4">
-        <ng-container *ngIf="productoPorCategoriaList$ | async as resultProductoPorCategoriaList">
-          <ng-container *ngFor="let productoItem of resultProductoPorCategoriaList.data; let i = index">
-            <div class="product-card">
-              <h2>{{ productoItem.Producto }}</h2>
-              <p>{{ productoItem.Observaciones }}</p>
-              <!-- <img [src]="productoItem.Imagen" alt="..."> -->
-              <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="...">
-              <p>Precio: {{ productoItem.Precio | currency: 'Q' }}</p>
-              <p class="card-text" align="right"><small class="text-body-secondary">En existencia: {{
-                  productoItem.Cantidad }}</small></p>
+        <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
+          <ng-container *ngFor="let categoriaItem of resultCategoriaList.data; let i = index">
+            <div class="card-container">
+              <div class="circular-card">
+                <img src="../../../assets/images/imagen{{ i+1 }}.jpg" class="card-img-top" alt="Imagen de categoría">
+              </div>
+              <div class="card-body">
+                <button type="button" class="btn btn-outline-secondary"
+                  (click)="productoPorCategoria(categoriaItem.CodCategoriaProducto)">
+                  <span>{{ categoriaItem.CategoriaProducto }}</span>
+                </button>
+              </div>
             </div>
           </ng-container>
         </ng-container>
@@ -74,10 +52,33 @@
   </main>
 </section>
 
+<section *ngIf="seccionProducto">
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        
+        <ng-container *ngIf="productoPorCategoriaList.data.length > 0" >
+          <div *ngFor="let productoItem of productoPorCategoriaList.data; let i = index">
+            <div class="product-card">
+              <h2>{{ productoItem.Producto }}</h2>
+              <p>{{ productoItem.Observaciones }}</p>
+              <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="Imagen del producto">
+              <p>Precio: {{ productoItem.Precio | currency: 'Q' }}</p>
+              <p class="card-text" align="right">
+                <small class="text-body-secondary">
+                  En existencia: {{ productoItem.Cantidad }}
+                </small>
+              </p>
+            </div>
+          </div>
+        </ng-container>
 
+      </div>
+    </div>
+  </main>
+</section>
 
 <br>
-
 
 <section>
   <main class="container">
@@ -94,7 +95,6 @@
               <div class="product-card">
                 <h2>{{productoItem.Producto}}</h2>
                 <p>{{productoItem.Observaciones}}</p>
-                <!-- <img src="{{productoItem.Imagen}}" alt="Imagen del producto"> -->
                 <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="...">
                 <p>Precio: {{productoItem.Precio | currency: 'Q'}}</p>
               </div>
@@ -104,11 +104,11 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductos" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+          <span class="visually-hidden">Anterior</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselProductos" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+          <span class="visually-hidden">Siguiente</span>
         </button>
       </div>
     </div>
