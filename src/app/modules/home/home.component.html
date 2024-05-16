@@ -14,15 +14,21 @@
   </main>
 </section>
 
-<!-- <section>
+
+
+<section>
   <main class="container">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
       <div class="row row-cols-1 row-cols-md-2 g-4">
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
 
       </div>
     </div>
   </main>
-</section> -->
+</section>
 
 <section>
   <main class="container">
@@ -101,13 +107,19 @@
             <div *ngFor="let productoItem of resultProductoList.data; let i = index" class="carousel-item"
               [class.active]="i === 0">
               
+                          <!-- <div *ngIf="resultProductoList.success == false" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error recibido: </strong> {{ resultProductoList.message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                              (click)="mostrarMensajeError()"></button>
+                          </div> -->
+
               <div class="product-card">
                 <h2>{{productoItem.Producto}}</h2>
                 <p>{{productoItem.Observaciones}}</p>
                 <img src="../../../assets/images/imagen{{ i+1 }}.jpg" alt="...">
                 <p>Precio: {{productoItem.Precio | currency: 'Q'}}</p>
               </div>
-              
+
             </div>
           </div>
 

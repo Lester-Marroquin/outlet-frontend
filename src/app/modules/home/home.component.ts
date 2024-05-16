@@ -19,6 +19,10 @@ export class HomeComponent implements OnInit {
   public productoPorCategoriaList$!: Observable<ProductoResult>;
   public seccionProducto!: boolean;
 
+  //Varibales para mostrar el mensaje de error
+  public errorMessage: string = '';
+  public errorSuccess: boolean = false;
+
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService
@@ -27,15 +31,23 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.productoList$ = this.productoService.getAllProducto$().pipe(
       catchError((error) => {
+          this.errorSuccess = true;
+          this.errorMessage = error.message;
         return of({ success: false, message: error.message, data: [] });
       })
     );
 
     this.categoriaList$ = this.categoriaService.getAllCategoria$().pipe(
       catchError((error) => {
+          this.errorSuccess = true;
+          this.errorMessage = error.message;
         return of({ success: false, message: error.message, data: [] });
       })
     );
+  }
+
+  mostrarError(): void {
+    
   }
 
   productoPorCategoria(codCategoriaProducto: number): void {
@@ -47,10 +59,10 @@ export class HomeComponent implements OnInit {
       .getProductoPorCategoria$(codCategoriaProducto)
       .pipe(
         catchError((error) => {
+            this.errorSuccess = true;
+            this.errorMessage = error.message;
           return of({ success: false, message: error.message, data: [] });
         })
       );
   }
-
-
 }
