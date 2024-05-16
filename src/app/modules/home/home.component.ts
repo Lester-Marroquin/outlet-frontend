@@ -5,6 +5,7 @@ import { ProductoService } from '../../services/producto.service';
 import { CategoriaResult } from '../../interfaces/categoria';
 import { CategoriaService } from '../../services/categoria.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { error } from 'console';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.productoList$ = this.productoService.getAllProducto$().pipe(
@@ -43,11 +44,14 @@ export class HomeComponent implements OnInit {
       this.seccionProducto = !this.seccionProducto;
     }
 
-    this.productoPorCategoriaList$ = this.productoService.getProductoPorCategoria$(codCategoriaProducto).pipe(
-      catchError((error) => { 
-        return of({ success: false, message: error.message, data: [] });
-      })
-    );
+    this.productoPorCategoriaList$ = this.productoService
+      .getProductoPorCategoria$(codCategoriaProducto)
+      .pipe(
+        catchError((error) => {
+          return of({ success: false, message: error.message, data: [] });
+        })
+      );
   }
+
 
 }
