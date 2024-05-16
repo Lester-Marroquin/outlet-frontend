@@ -5,7 +5,6 @@ import { ProductoService } from '../../services/producto.service';
 import { CategoriaResult } from '../../interfaces/categoria';
 import { CategoriaService } from '../../services/categoria.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { error } from 'console';
 
 @Component({
   selector: 'app-home',
