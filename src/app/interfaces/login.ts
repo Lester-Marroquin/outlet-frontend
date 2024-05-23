@@ -6,5 +6,18 @@ export interface Login {
 export interface LoginResult {
   success: boolean;
   message: string;
-  data: Login[];
+  data: {
+    Empleado: {
+      CodEmpleado: number;
+      UsuarioEmpleado: string;
+      CodPersona: number;
+      Jefe: number;
+      CodCargo: number;
+      FechaIngreso: string;
+      FechaRetiro: string;
+      CodEstado: number;
+      CodRol: number;
+    };
+    token: string;
+  } | null;
 }

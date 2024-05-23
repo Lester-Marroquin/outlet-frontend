@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { ProductoDetalleComponent } from '../producto-detalle/producto-detalle.component';
 import { ProductoService } from '../../services/producto.service';
 import { AsyncPipe } from '@angular/common';
@@ -15,9 +15,17 @@ import { ProductoResult } from '../../interfaces/producto';
 export class ProductoComponent implements OnInit {
   public productoList$!: Observable<ProductoResult>;
 
+  public errorMensaje: string = '';
+  public errorBanner: boolean = false;
+
   constructor(private productoService: ProductoService) {}
 
   ngOnInit(): void {
-    this.productoList$ = this.productoService.getAllProducto$();
+    this.productoList$ = this.productoService.getAllProducto$().pipe(
+      catchError((error) => {
+        this.errorMensaje = error.errorMessage;
+        return throwError(() => error);
+      })
+    );
   }
 }
