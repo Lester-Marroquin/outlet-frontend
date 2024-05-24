@@ -15,7 +15,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import bootstrap from '../../../main.server';
 
 @Component({
   selector: 'app-home',
