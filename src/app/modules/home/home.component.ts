@@ -114,6 +114,10 @@ export class HomeComponent implements OnInit {
           if (token) {
             localStorage.setItem('token', token);
             this.router.navigate(['/dashboard']);
+            // Recargar la página después de un breve retraso
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
           } else {
             this.errorMensaje = 'No se recibio token válido';
           }
