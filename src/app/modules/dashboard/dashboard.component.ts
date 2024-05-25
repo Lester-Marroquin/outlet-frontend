@@ -1,9 +1,13 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; // Asegúrate de importar RouterModule
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule, RouterModule ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

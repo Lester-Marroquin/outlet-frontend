@@ -1,0 +1,65 @@
+<section>
+
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="row row-cols-1 row-cols-md-2 g-4 table-responsive">
+
+
+            <h2>Hola productos</h2>
+            <table class="table table-hover table-responsive">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Cod Prod</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Disponibles</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <ng-container *ngIf="productoList$ | async as resultProductoList">
+                        <tr *ngFor="let productoData of resultProductoList.data">
+                            <th scope="row">{{ productoData.CodProducto }}</th>
+                            <td>{{ productoData.MarcaProducto }}</td>
+                            <td>{{ productoData.Producto }}</td>
+                            <td>{{ productoData.Cantidad }}</td>
+                            <td>{{ productoData.Precio }}</td>
+                            <td>{{ productoData.Color }}</td>
+                            <td>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-danger btn-sm" type="button"><i
+                                            class="fa-regular fa-trash-can"></i></button>
+                                    <button class="btn btn-outline-warning btn-sm" type="button"><i
+                                            class="fa-solid fa-file-pen"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- @if(productoList$ | async; as resultProductoList){
+
+    @for(productoData of resultProductoList.data; track productoData.Producto){
+        <div class="product-card">
+            <h2>{{productoData.Producto}}</h2>
+            <p>{{productoData.Observaciones}}</p>
+            <img src="{{productoData.Imagen}}" alt="Imagen del producto">
+            <p>Precio: {{productoData.Precio}}</p>
+            <h1>Detalle de producto</h1>
+        </div>
+    }
+} 
+
+
+</div>-->

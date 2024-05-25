@@ -1,0 +1,27 @@
+<section>
+    <main class="container">
+
+        <div class="card text-center">
+            <div class="card-header">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                        (click)="verDetalleComponent($event)">
+                    <label class="btn btn-outline-secondary" for="btnradio1"><i class="fa-solid fa-list-ol"></i> Listar
+                        Producto</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                        (click)="verCrearComponent($event)">
+                    <label class="btn btn-outline-success" for="btnradio2"><i class="fa-solid fa-plus"></i> Crear
+                        producto</label>
+
+                </div>
+            </div>
+        </div>
+
+        <app-producto-detalle *ngIf="verDetalle"></app-producto-detalle>
+        <app-producto-crear *ngIf="verCrear"></app-producto-crear>
+
+
+    </main>
+</section>

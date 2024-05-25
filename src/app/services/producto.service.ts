@@ -24,13 +24,14 @@ export class ProductoService {
   }
 
   getProductoPorCategoria$(id: number): Observable<ProductoResult> {
-    return this.http.get<ProductoResult>(`${this.URL}/productoPorCategoria/${id}`).pipe(
-      map((response) => ({
-        success: response.success,
-        message: response.message,
-        data: response.data,
-      }))
-    );
+    return this.http
+      .get<ProductoResult>(`${this.URL}/productoPorCategoria/${id}`)
+      .pipe(
+        map((response) => ({
+          success: response.success,
+          message: response.message,
+          data: response.data,
+        }))
+      );
   }
-
 }
