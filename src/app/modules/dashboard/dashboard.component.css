@@ -1,0 +1,11 @@
+hr {
+    border: none;
+    border-top: 1px solid white;
+    margin: 10px 0;
+}
+
+.fondo {
+    background-color: #000b76;
+    /* background-color: #212247; */
+}
+

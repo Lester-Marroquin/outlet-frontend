@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ClienteComponent } from './modules/cliente/cliente.component';
-import { InventarioComponent } from './modules/inventario/inventario.component';
 import { ProductoComponent } from './modules/producto/producto-home/producto.component';
 import { ProductoDetalleComponent } from './modules/producto/producto-detalle/producto-detalle.component';
 
@@ -14,7 +13,6 @@ export const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'cliente', component: ClienteComponent },
-      { path: 'inventario', component: InventarioComponent },
       {
         path: 'producto',
         component: ProductoComponent,

@@ -1,43 +1,133 @@
 <section>
     <main class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/dashboard">Outlet Mancilla</a>
 
-                <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 fondo">
+                    <div
+                        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <br>
+                        <a href="/dashboard"
+                            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <span class="fs-5">O<span class="d-none d-sm-inline">utlet Mancilla</span></span>
+                        </a>
+                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                            id="menu">
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="btn-group">
-
-                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="fa-solid fa-bars"></i>   
-                            Modulo
-                        </button>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" routerLink="cliente" (click)="toggleMenu()">Clientes</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" routerLink="inventario" (click)="toggleMenu()">Inventarios</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" routerLink="producto" (click)="toggleMenu()">Productos</a></li>
+                            <li>
+                                <a href="#/dashboard" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-house"></i> <span
+                                        class="ms-1 d-none d-sm-inline">Home</span></a>
+                            </li>
+                            <br>
+                            <br>
+                            <li>
+                                <a href="/ventas" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-cart-shopping"></i> <span class="ms-1 d-none d-sm-inline">
+                                        Ventas</span></a>
+                            </li>
+                            <li>
+                                <a href="/compras" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-money-check-dollar"></i> <span
+                                        class="ms-1 d-none d-sm-inline"> Compras</span></a>
+                            </li>
+                            <br>
+                            <br>
+                            <li>
+                                <a routerLink="/dashboard/producto" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-layer-group"></i> <span class="ms-1 d-none d-sm-inline">
+                                        Inventario</span> </a>
+                            </li>
+                            <br>
+                            <br>
+                            <li>
+                                <a href="/clientes" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-id-card"></i> <span class="ms-1 d-none d-sm-inline">
+                                        Clientes</span> </a>
+                            </li>
+                            <li>
+                                <a href="/proveedores" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-arrows-down-to-people"></i> <span
+                                        class="ms-1 d-none d-sm-inline">
+                                        Proveedores</span> </a>
+                            </li>
+                            <br>
+                            <br>
+                            <li>
+                                <a href="/colaboradores" class="nav-link px-0 align-middle text-white">
+                                    <i class="fa-solid fa-people-group"></i> <span class="ms-1 d-none d-sm-inline">
+                                        Colaboradores</span> </a>
+                            </li>
                         </ul>
-
+                        <hr>
+                        <div class="dropdown pb-4">
+                            <a href="#"
+                                class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="" width="30" height="30" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1">Mi perfil</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow"
+                                aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="#">Mis datos</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <button type="button" class="btn btn-info btn-sm">
-                                <i class="fa-regular fa-user"></i>   Mi perfil</button>
-                        </li>
-                    </ul>                  
-
+                </div>
+                <div class="col py-3">
+                    <router-outlet />
                 </div>
             </div>
-        </nav>
+        </div>
     </main>
-    <router-outlet />
 </section>
+
+
+    <!-- <section>
+            <main class="container">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/dashboard">Outlet Mancilla</a>
+    
+                    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+    
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="btn-group">
+    
+                            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-bars"></i>
+                                Modulo
+                            </button>
+    
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" routerLink="cliente" (click)="toggleMenu()">Clientes</a></li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" routerLink="inventario" (click)="toggleMenu()">Inventarios</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" routerLink="producto" (click)="toggleMenu()">Productos</a></li>
+                            </ul>
+    
+                        </div>  
+    
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <button type="button" class="btn btn-info btn-sm">
+                                    <i class="fa-regular fa-user"></i> Mi perfil</button>
+                            </li>
+                        </ul>
+    
+                    </div>
+                </div>
+            </nav> 
+        </main>
+    </section> -->

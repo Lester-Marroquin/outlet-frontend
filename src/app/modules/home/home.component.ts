@@ -131,10 +131,6 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  registro() {}
-
-  respuestaLogin() {}
-
   onOpcion(menuOpcion: string) {
     this.menuOpcion = menuOpcion;
   }

@@ -1,15 +1,16 @@
-<section>
+<section *ngIf="seccionListado">
 
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
         <div class="row row-cols-1 row-cols-md-2 g-4 table-responsive">
 
 
-            <h2>Hola productos</h2>
+            <h3>Listado de productos</h3>
             <table class="table table-hover table-responsive">
 
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Cod Prod</th>
+                        <th scope="col">Imagen</th>
                         <th scope="col">Marca</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Disponibles</th>
@@ -22,17 +23,18 @@
                     <ng-container *ngIf="productoList$ | async as resultProductoList">
                         <tr *ngFor="let productoData of resultProductoList.data">
                             <th scope="row">{{ productoData.CodProducto }}</th>
+                            <td><img src=" " class="img-thumbnail" alt="..."></td>
                             <td>{{ productoData.MarcaProducto }}</td>
                             <td>{{ productoData.Producto }}</td>
                             <td>{{ productoData.Cantidad }}</td>
-                            <td>{{ productoData.Precio }}</td>
+                            <td>{{ productoData.Precio | currency: 'Q' }}</td>
                             <td>{{ productoData.Color }}</td>
                             <td>
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-danger btn-sm" type="button"><i
-                                            class="fa-regular fa-trash-can"></i></button>
-                                    <button class="btn btn-outline-warning btn-sm" type="button"><i
-                                            class="fa-solid fa-file-pen"></i></button>
+                                    <button class="btn btn-outline-success btn-sm" type="button"
+                                        (click)="editarProducto(productoData)">Editar
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -46,20 +48,212 @@
 
 </section>
 
+<section *ngIf="detallesProducto">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="row">
+            <h4>Detalle de producto</h4>
+            <div class="col-md-6">
 
+                <div class="product-card">
+                    <img src="../../../assets/images/imagen1.jpg" class="d-block w-100" alt="...">
+                </div>
 
-<!-- @if(productoList$ | async; as resultProductoList){
+            </div>
 
-    @for(productoData of resultProductoList.data; track productoData.Producto){
-        <div class="product-card">
-            <h2>{{productoData.Producto}}</h2>
-            <p>{{productoData.Observaciones}}</p>
-            <img src="{{productoData.Imagen}}" alt="Imagen del producto">
-            <p>Precio: {{productoData.Precio}}</p>
-            <h1>Detalle de producto</h1>
+            <div class="col-md-6">
+
+                <div>
+                    <h3>Detalles del Producto</h3>
+                    <p>Código: {{ productoItem.CodProducto }}</p>
+                    <p>Marca: {{ productoItem.MarcaProducto }}</p>
+                    <p>Producto: {{ productoItem.Producto }}</p>
+                    <p>Disponibles: {{ productoItem.Cantidad }}</p>
+                    <p>Precio: {{ productoItem.Precio | currency: 'Q' }}</p>
+                    <p>Color: {{ productoItem.Color }}</p>
+
+                </div>
+                <button class="btn btn-warning btn-sm"
+                    (click)="modificarProducto = true; seccionListado = false; productoModificado = productoItem">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Modificar producto
+                </button>
+            </div>
+
+            <div class="col-md-6">
+                <button class="btn btn-info btn-sm" (click)="detallesProducto = false; seccionListado = true;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Volver al listado
+                </button>
+            </div>
         </div>
-    }
-} 
+    </div>
+</section>
 
 
-</div>-->
+<section>
+    <div *ngIf="modificarProducto" class="containter">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+
+            <div class="col-md-6" align="center">
+                <h3>Modificación de datos de producto</h3>
+                <hr>
+                <br>
+
+                <form (ngSubmit)="setModificarProducto()" [formGroup]="formularioProductoModificado"
+                    class="login-auth-form">
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="CodProducto" class="col-form-label">Cod. Producto</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" [(ngModel)]="productoModificado.CodProducto"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Producto" class="col-form-label">Descripción</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" [(ngModel)]="productoModificado.Producto"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Cantidad" class="col-form-label">Cantidad</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" [(ngModel)]="productoModificado.Cantidad"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Precio" class="col-form-label">Precio</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" [(ngModel)]="productoModificado.Precio"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Color" class="col-form-label">Color</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" [(ngModel)]="productoModificado.Color"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Observaciones" class="col-form-label">Observaciones</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" [(ngModel)]="productoModificado.Observaciones"
+                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Tipo" class="col-form-label">Tipo</label>
+                        </div>
+
+                        <div class="col-auto">
+                            <select [(ngModel)]="productoModificado.Tipo" [ngModelOptions]="{standalone: true}" class="form-select" aria-label="Default select example">
+                                <option value={{productoModificado.Tipo}} disabled>{{productoModificado.Tipo}}</option>
+                                <option value="Producto">Producto</option>
+                                <option value="Servicio">Servicio</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Tipo" class="col-form-label">Categoría</label>
+                        </div>
+
+                        <div class="col-auto">
+                            <select [(ngModel)]="productoModificado.CodCategoriaProducto" [ngModelOptions]="{standalone: true}" class="form-select" aria-label="Default select example">
+                                <option value={{productoModificado.CategoriaProducto}} disabled>{{productoModificado.CategoriaProducto}}</option>
+                                <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
+                                    <ng-container *ngFor="let categoriaItem of resultCategoriaList.data; let i = index">
+                                        <option [value]="categoriaItem.CodCategoriaProducto">{{categoriaItem.CategoriaProducto}}</option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br>
+                    
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="Tipo" class="col-form-label">Marca</label>
+                        </div>
+                    
+                        <div class="col-auto">
+                            <select [(ngModel)]="productoModificado.CodMarcaProducto" [ngModelOptions]="{standalone: true}"
+                                class="form-select" aria-label="Default select example">
+                                <option value={{productoModificado.MarcaProducto}} disabled>{{productoModificado.MarcaProducto}}
+                                </option>
+                                <ng-container *ngIf="marcaList$ | async as resultMarcaList">
+                                    <ng-container *ngFor="let marcaItem of resultMarcaList.data; let i = index">
+                                        <option [value]="marcaItem.CodMarcaProducto">{{marcaItem.MarcaProducto}}</option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+
+                   <!-- 
+    
+    "Imagen": "Imagen de lavadora",
+
+
+    "CodProveedor": 2,
+    "CodEstado": 1
+                     -->
+
+
+                    <button [disabled]="formularioProductoModificado.invalid" type="submit" class="btn btn-success">
+                        Guardar Cambios
+                    </button>
+
+
+                </form>
+
+            </div>
+
+            <div class="col-md-3">
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -8,17 +8,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="producto" [ngClass]="{active: menuOpcion == 'producto'}"
-                (click)="onOpcion">Productos</a>
-            </li>
-          </ul> -->
           <ul class="navbar-nav ms-auto">
-            <!-- <li class="nav-item">
-              <a class="nav-link" routerLink="" [ngClass]="{active: menuOpcion == 'ubicaciones'}"
-                (click)="onOpcion">Ubicaciones</a>
-            </li> -->
             <li class="nav-item">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Iniciar sesión                
@@ -33,7 +23,6 @@
 </section>
 
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -49,13 +38,13 @@
           <img width="25" height="250" src="../../../assets/images/imagen4.jpg" class="card-img-top" alt="...">
           <form (ngSubmit)="login()" [formGroup]="formularioLogin" class="login-auth-form">
 
-            <!-- Input UsuarioEmpleado -->
+
             <div class="form-outline mb-4">
               <label for="correo" class="form-label"></label>
               <input formControlName="UsuarioEmpleado" type="text" class="form-control" placeholder="ID Colaborador" />
             </div>
 
-            <!-- Input ClaveEmpleado-->
+ 
             <div class="form-outline mb-4">
               <label for="clave" class="form-label"></label>
               <input formControlName="ClaveEmpleado" type="password" class="form-control" placeholder="Contraseña" />
@@ -77,9 +66,7 @@
         
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        
-      </div> -->
+
     </div>
   </div>
 </div>
@@ -195,7 +182,7 @@
       <div id="carouselProductos" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
 
-          <!-- Aquí irá el contenido del carrusel -->
+
           <div *ngIf="productoList$ | async as resultProductoList" class="carousel-inner">
             <div *ngFor="let productoItem of resultProductoList.data; let i = index" class="carousel-item"
               [class.active]="i === 0">
@@ -220,6 +207,7 @@
           <span class="visually-hidden">Siguiente</span>
         </button>
       </div>
+      
     </div>
   </main>
 
