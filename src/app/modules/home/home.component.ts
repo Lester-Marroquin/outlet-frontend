@@ -15,6 +15,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { LoginEmpleado } from '../../interfaces/login';
 
 @Component({
   selector: 'app-home',
@@ -103,9 +104,9 @@ export class HomeComponent implements OnInit {
   menuOpcion: String = '';
 
   login(): void {
-    const { UsuarioEmpleado, ClaveEmpleado } = this.formularioLogin.value;
+    const dataLogin: LoginEmpleado = this.formularioLogin.value;
 
-    this.loginService.loginEmpleado$(UsuarioEmpleado, ClaveEmpleado).subscribe(
+    this.loginService.loginEmpleado$(dataLogin).subscribe(
       (response) => {
         if (response.success) {
           const token  = response.data?.token;

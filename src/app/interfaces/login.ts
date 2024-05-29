@@ -1,9 +1,18 @@
-export interface Login {
+export interface LoginEmpleado {
+  
   UsuarioEmpleado: string;
   ClaveEmpleado: string;
 }
 
-export interface LoginResult {
+export interface LoginCliente {
+
+  UsuarioID: string;
+  ClaveUsuario: string;
+
+}
+
+export interface LoginEmpleadoResult {
+
   success: boolean;
   message: string;
   data: {
@@ -20,4 +29,24 @@ export interface LoginResult {
     };
     token: string;
   } | null;
+
+}
+
+export interface LoginClienteResult {
+
+  success: boolean;
+  message: string;
+  data: {
+    Usuario: {
+      CodUsuario: number;
+      UsuarioID: string;
+      CodPersona: number;
+      CodRol: number;
+      FechaRegistro: string;
+      FechaBaja: string;
+      CodEstado: number;
+    };
+    token: string;
+  } | null;
+  
 }

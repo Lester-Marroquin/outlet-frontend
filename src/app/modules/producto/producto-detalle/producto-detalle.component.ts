@@ -90,5 +90,7 @@ export class ProductoDetalleComponent implements OnInit {
         return throwError(() => error);
       })
     );
+
+
   }
 }
