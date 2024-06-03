@@ -1,9 +1,16 @@
-<section *ngIf="seccionListado">
+<section>
+    <div>
+        <button type="button" class="btn btn-outline-info" (click)="verListado()">Listar productos</button>
+        <button type="button" class="btn btn-outline-success" (click)="verCrearProducto()">Crear producto</button>
+    </div>
+</section>
 
+<br>
+
+<!-- Sección de listado  -->
+<section *ngIf="seccionListado">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
         <div class="row row-cols-1 row-cols-md-2 g-4 table-responsive">
-
-
             <h3>Listado de productos</h3>
             <table class="table table-hover table-responsive">
 
@@ -16,6 +23,7 @@
                         <th scope="col">Disponibles</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Color</th>
+                        <!-- <th scope="col">Estado</th> -->
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -29,6 +37,7 @@
                             <td>{{ productoData.Cantidad }}</td>
                             <td>{{ productoData.Precio | currency: 'Q' }}</td>
                             <td>{{ productoData.Color }}</td>
+                            <!-- <td>{{ productoData.CodEstado }}</td> -->
                             <td>
                                 <div class="d-grid gap-2">
                                     <button class="btn btn-outline-success btn-sm" type="button"
@@ -41,13 +50,11 @@
                     </ng-container>
                 </tbody>
             </table>
-
-
         </div>
     </div>
-
 </section>
 
+<!-- Sección de Detalles  -->
 <section *ngIf="detallesProducto">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
         <div class="row">
@@ -80,18 +87,35 @@
             </div>
 
             <div class="col-md-6">
-                <button class="btn btn-info btn-sm" (click)="detallesProducto = false; seccionListado = true;">
+                <button class="btn btn-info btn-sm"
+                    (click)="detallesProducto = false; modificarProducto = false;  seccionListado = true;">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Volver al listado
                 </button>
             </div>
+
+            <br>
+            <br>
+
+            <div *ngIf="errorMensaje" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error recibido: </strong> {{ errorMensaje }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="errorMensaje=''"></button>
+            </div>
+
+            <div *ngIf="successMensaje" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Mensaje recibido: </strong> {{ successMensaje }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    (click)="successMensaje=''"></button>
+            </div>
+
         </div>
     </div>
 </section>
 
-
-<section>
-    <div *ngIf="modificarProducto" class="containter">
+<!-- Sección de Modificación  -->
+<section *ngIf="modificarProducto">
+    <div class="containter">
         <div class="row">
             <div class="col-md-3">
             </div>
@@ -101,16 +125,13 @@
                 <hr>
                 <br>
 
-                <form (ngSubmit)="setModificarProducto()" [formGroup]="formularioProductoModificado"
-                    class="login-auth-form">
-
+                <form (ngSubmit)="setModificarProducto()" class="login-auth-form">
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
                             <label for="CodProducto" class="col-form-label">Cod. Producto</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" [(ngModel)]="productoModificado.CodProducto"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <label for="CodProducto" class="col-form-label">{{productoModificado.CodProducto}}</label>
                         </div>
                     </div>
 
@@ -121,8 +142,8 @@
                             <label for="Producto" class="col-form-label">Descripción</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" [(ngModel)]="productoModificado.Producto"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <input type="text" [(ngModel)]="productoModificado.Producto" name="Producto"
+                                class="form-control">
                         </div>
                     </div>
 
@@ -133,8 +154,8 @@
                             <label for="Cantidad" class="col-form-label">Cantidad</label>
                         </div>
                         <div class="col-auto">
-                            <input type="number" [(ngModel)]="productoModificado.Cantidad"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <input type="number" [(ngModel)]="productoModificado.Cantidad" name="Cantidad"
+                                class="form-control">
                         </div>
                     </div>
 
@@ -145,8 +166,8 @@
                             <label for="Precio" class="col-form-label">Precio</label>
                         </div>
                         <div class="col-auto">
-                            <input type="number" [(ngModel)]="productoModificado.Precio"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <input type="number" [(ngModel)]="productoModificado.Precio" name="Precio"
+                                class="form-control">
                         </div>
                     </div>
 
@@ -157,8 +178,7 @@
                             <label for="Color" class="col-form-label">Color</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" [(ngModel)]="productoModificado.Color"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <input type="text" [(ngModel)]="productoModificado.Color" name="Color" class="form-control">
                         </div>
                     </div>
 
@@ -169,8 +189,8 @@
                             <label for="Observaciones" class="col-form-label">Observaciones</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" [(ngModel)]="productoModificado.Observaciones"
-                                [ngModelOptions]="{standalone: true}" class="form-control" required>
+                            <input type="text" [(ngModel)]="productoModificado.Observaciones" name="Observaciones"
+                                class="form-control">
                         </div>
                     </div>
 
@@ -180,9 +200,8 @@
                         <div class="col-auto">
                             <label for="Tipo" class="col-form-label">Tipo</label>
                         </div>
-
                         <div class="col-auto">
-                            <select [(ngModel)]="productoModificado.Tipo" [ngModelOptions]="{standalone: true}" class="form-select" aria-label="Default select example">
+                            <select [(ngModel)]="productoModificado.Tipo" name="Tipo" class="form-select">
                                 <option value={{productoModificado.Tipo}} disabled>{{productoModificado.Tipo}}</option>
                                 <option value="Producto">Producto</option>
                                 <option value="Servicio">Servicio</option>
@@ -194,15 +213,18 @@
 
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="Tipo" class="col-form-label">Categoría</label>
+                            <label for="Categoria" class="col-form-label">Categoría</label>
                         </div>
-
                         <div class="col-auto">
-                            <select [(ngModel)]="productoModificado.CodCategoriaProducto" [ngModelOptions]="{standalone: true}" class="form-select" aria-label="Default select example">
-                                <option value={{productoModificado.CategoriaProducto}} disabled>{{productoModificado.CategoriaProducto}}</option>
+                            <select [(ngModel)]="productoModificado.CodCategoriaProducto" name="Categoria"
+                                class="form-select">
+                                <option value={{productoModificado.CategoriaProducto}} disabled>
+                                    {{productoModificado.CategoriaProducto}}</option>
                                 <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
                                     <ng-container *ngFor="let categoriaItem of resultCategoriaList.data; let i = index">
-                                        <option [value]="categoriaItem.CodCategoriaProducto">{{categoriaItem.CategoriaProducto}}</option>
+                                        <option [value]="categoriaItem.CodCategoriaProducto">
+                                            {{categoriaItem.CategoriaProducto}}
+                                        </option>
                                     </ng-container>
                                 </ng-container>
                             </select>
@@ -210,44 +232,36 @@
                     </div>
 
                     <br>
-                    
+
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <label for="Tipo" class="col-form-label">Marca</label>
+                            <label for="Marca" class="col-form-label">Marca</label>
                         </div>
-                    
                         <div class="col-auto">
-                            <select [(ngModel)]="productoModificado.CodMarcaProducto" [ngModelOptions]="{standalone: true}"
-                                class="form-select" aria-label="Default select example">
-                                <option value={{productoModificado.MarcaProducto}} disabled>{{productoModificado.MarcaProducto}}
+                            <select [(ngModel)]="productoModificado.CodMarcaProducto" name="Marca" class="form-select">
+                                <option value={{productoModificado.MarcaProducto}} disabled>
+                                    {{productoModificado.MarcaProducto}}
                                 </option>
                                 <ng-container *ngIf="marcaList$ | async as resultMarcaList">
                                     <ng-container *ngFor="let marcaItem of resultMarcaList.data; let i = index">
-                                        <option [value]="marcaItem.CodMarcaProducto">{{marcaItem.MarcaProducto}}</option>
+                                        <option [value]="marcaItem.CodMarcaProducto">{{marcaItem.MarcaProducto}}
+                                        </option>
                                     </ng-container>
                                 </ng-container>
                             </select>
                         </div>
                     </div>
 
-                    
+                    <br>
+                    <br>
 
-                   <!-- 
-    
-    "Imagen": "Imagen de lavadora",
-
-
-    "CodProveedor": 2,
-    "CodEstado": 1
-                     -->
-
-
-                    <button [disabled]="formularioProductoModificado.invalid" type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success">
                         Guardar Cambios
                     </button>
-
-
                 </form>
+
+                <br>
+
 
             </div>
 
@@ -255,5 +269,112 @@
             </div>
 
         </div>
+    </div>
+</section>
+
+<!-- Sección de Creación  -->
+<section *ngIf="seccionCrear">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="row">
+            <form [formGroup]="productoForm" (ngSubmit)="crearProducto()" class="row g-3">
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Categoria" class="form-label">Categoría</label>
+                        <select formControlName="CodCategoriaProducto" class="form-select">
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            <ng-container *ngIf="categoriaList$ | async as resultCategoriaList">
+                                <ng-container *ngFor="let categoriaItem of resultCategoriaList.data">
+                                    <option [value]="categoriaItem.CodCategoriaProducto">
+                                        {{categoriaItem.CategoriaProducto}}
+                                    </option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Producto" class="form-label">Nombre del Producto:</label>
+                        <input type="text" class="form-control" id="Producto" formControlName="Producto" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Cantidad" class="form-label">Cantidad:</label>
+                        <input type="number" class="form-control" id="Cantidad" formControlName="Cantidad" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Precio" class="form-label">Precio:</label>
+                        <input type="number" class="form-control" id="Precio" formControlName="Precio" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Color" class="form-label">Color:</label>
+                        <input type="text" class="form-control" id="Color" formControlName="Color" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Marca" class="form-label">Marca:</label>
+                        <select formControlName="CodMarcaProducto" class="form-select">
+                            <option value="" disabled selected>Seleccione una marca</option>
+                            <ng-container *ngIf="marcaList$ | async as resultMarcaList">
+                                <ng-container *ngFor="let marcaItem of resultMarcaList.data">
+                                    <option [value]="marcaItem.CodMarcaProducto">
+                                        {{marcaItem.MarcaProducto}}
+                                    </option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Observaciones" class="form-label">Observaciones:</label>
+                        <input type="text" class="form-control" id="Observaciones" formControlName="Observaciones" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="Proveedor" class="form-label">Proveedor:</label>
+                        <select formControlName="CodProveedor" class="form-select">
+                            <option value="" disabled selected>Seleccione un proveedor</option>
+                            <ng-container *ngIf="proveedorList$ | async as resultProveedorList">
+                                <ng-container *ngFor="let proveedorItem of resultProveedorList.data">
+                                    <option [value]="proveedorItem.CodProveedor">
+                                        {{proveedorItem.NombreComercial}}
+                                    </option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">Crear Producto</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <div *ngIf="errorMensaje" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Mensaje recibido: </strong> {{ errorMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="errorMensaje=''"></button>
+        </div>
+        <div *ngIf="successMensaje" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Mensaje recibido: </strong> {{ successMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="successMensaje=''"></button>
+        </div>
+
     </div>
 </section>

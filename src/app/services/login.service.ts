@@ -23,14 +23,4 @@ export class LoginService {
     );
   }
 
-  loginCliente$(datalogin: LoginCliente): Observable<LoginClienteResult> {
-    
-    return this.http.post<LoginClienteResult>(`${this.URL}/login-empleado`, datalogin).pipe(
-      map((response) => ({
-        success: response.success,
-        message: response.message,
-        data: response.data,
-      }))
-    );
-  }
 }

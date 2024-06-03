@@ -1,6 +1,6 @@
 export interface Producto {
 
-    CodProducto: number;
+    CodProducto?: number;
     CodCategoriaProducto: number;
     Producto: string;
     Cantidad: number;
@@ -12,8 +12,8 @@ export interface Producto {
     CodEstado: number;
     Tipo: string;
     CodProveedor: number;
-    MarcaProducto: string;
-    CategoriaProducto: string;
+    MarcaProducto?: string;
+    CategoriaProducto?: string;
 
 }
 

@@ -36,7 +36,7 @@ export class CategoriaService {
 
   putCategoria$(id: number, dataCategoria: Categoria): Observable<CategoriaResult> {
     return this.http
-      .post<CategoriaResult>(`${this.URL}/categoria-producto${id}`, dataCategoria)
+      .post<CategoriaResult>(`${this.URL}/categoria-producto/${id}`, dataCategoria)
       .pipe(
         map((response) => ({
           success: response.success,
