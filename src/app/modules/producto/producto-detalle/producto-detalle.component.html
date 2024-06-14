@@ -58,7 +58,6 @@
 <section *ngIf="detallesProducto">
     <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
         <div class="row">
-            <h4>Detalle de producto</h4>
             <div class="col-md-6">
 
                 <div class="product-card">
@@ -69,15 +68,16 @@
 
             <div class="col-md-6">
 
-                <div>
+                <div class="text-start">
                     <h3>Detalles del Producto</h3>
+                    <br>
                     <p>Código: {{ productoItem.CodProducto }}</p>
                     <p>Marca: {{ productoItem.MarcaProducto }}</p>
                     <p>Producto: {{ productoItem.Producto }}</p>
                     <p>Disponibles: {{ productoItem.Cantidad }}</p>
                     <p>Precio: {{ productoItem.Precio | currency: 'Q' }}</p>
                     <p>Color: {{ productoItem.Color }}</p>
-
+                    <p>Observaciones: {{ productoItem.Observaciones }}</p>
                 </div>
                 <button class="btn btn-warning btn-sm"
                     (click)="modificarProducto = true; seccionListado = false; productoModificado = productoItem">

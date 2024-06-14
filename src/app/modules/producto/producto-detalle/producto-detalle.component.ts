@@ -96,7 +96,7 @@ export class ProductoDetalleComponent implements OnInit {
         }
       },
       (error) => {
-        this.errorMensaje = error.error.message;
+        this.errorMensaje = `${error.error.message} ${error.error.data}`;
       }
     );
   }

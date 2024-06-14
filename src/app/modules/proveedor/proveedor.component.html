@@ -1,0 +1,147 @@
+
+<section>
+    <main class="container py-5 bg-light">
+        <h1 class="display-4 text-center">Proveedores</h1>
+        <hr class="border-primary">
+
+        <div class="card text-center shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <button type="button" class="btn btn-outline-light" (click)="verListado()">Listar clientes</button>
+                    <button type="button" class="btn btn-outline-light" (click)="verCrearProveedor()">Crear
+                        proveedor</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+
+<!-- Sección de listado -->
+<section *ngIf="seccionListado" class="py-5 bg-secondary text-white">
+    <div class="container p-4 p-md-5 mb-4 rounded text-body-emphasis bg-dark shadow-sm">
+        <h3 style="color: white;">Listado de Proveedores</h3>
+        <div class="table-responsive">
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod Proveedor</th>
+                        <th scope="col">Nombre de proveedor</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="proveedorList$ | async as resultProveedorList">
+                        <tr *ngFor="let proveedorData of resultProveedorList.data">
+                            <th scope="row">{{ proveedorData.CodProveedor }}</th>
+                            <td>{{ proveedorData.NombreComercial }}</td>
+                            <td><p>correoProveedor</p></td>
+                            <td><p>12345678</p></td>
+                            <td><p>Dirección de proveedor</p></td>
+                            <td>
+                                <button class="btn btn-outline-success btn-sm" (click)="editarProveedor(proveedorData)">
+                                    Editar <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Detalles -->
+<section *ngIf="detallesProveedor" class="py-5 bg-light">
+    <div class="container p-4 p-md-5 mb-4 rounded bg-white shadow-sm">
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <h3>Detalles del proveedor</h3>
+                <p>Código: {{ proveedorItem.CodProveedor }}</p>
+                <p>Razón Social: {{ proveedorItem.RazonSocial }}</p>
+                <p>Nombre Comercial: {{ proveedorItem.NombreComercial }}</p>
+                <p>Identificación: {{ proveedorItem.NumeroIdentificacion }}</p>
+                <p>Cod Estado: {{ proveedorItem.CodEstado }}</p>
+                <p>No. Identificación {{ proveedorItem.NumeroIdentificacion }}</p>
+                <button class="btn btn-warning btn-sm"
+                    (click)="modificarProveedor = true; seccionListado = false; proveedorModificado = proveedorItem">
+                    Modificar proveedor <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+                <button class="btn btn-info btn-sm"
+                    (click)="detallesProveedor = false; modificarProveedor = false; seccionListado = true;">
+                    Volver al listado <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="errorMensaje" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>Error recibido: </strong> {{ errorMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="errorMensaje=''"></button>
+        </div>
+        <div *ngIf="successMensaje" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <strong>Mensaje recibido: </strong> {{ successMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="successMensaje=''"></button>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Modificación -->
+<section *ngIf="modificarProveedor" class="py-5 bg-secondary text-white">
+    <div class="container bg-dark p-4 rounded shadow-sm">
+        <h3 class="text-center">Modificación de datos de proveedor</h3>
+        <hr class="border-primary">
+
+        <form (ngSubmit)="setModificarProveedor()" class="login-auth-form">
+            <div class="mb-3 row">
+                <label for="CodProveedor" class="col-form-label col-md-4 text-md-end">Cod. Proveedor:</label>
+                <div class="col-md-6">
+                    <span class="form-control-plaintext">{{ proveedorModificado.CodProveedor }}</span>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="RazonSocial" class="col-form-label col-md-4 text-md-end">Raron Social</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="proveedorModificado.RazonSocial" name="RazonSocial" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="NombreComercial" class="col-form-label col-md-4 text-md-end">Nombre Comercial:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="proveedorModificado.NombreComercial" name="NombreComercial" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="CodTipoIdentificacion" class="col-form-label col-md-4 text-md-end">NombreC omercial:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="proveedorModificado.CodTipoIdentificacion" name="CodTipoIdentificacion" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="NumeroIdentificacion" class="col-form-label col-md-4 text-md-end">Numero de identificacion:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="proveedorModificado.NumeroIdentificacion" name="NumeroIdentificacion" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="CodEstado" class="col-form-label col-md-4 text-md-end">Estado:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="proveedorModificado.CodEstado" name="CodEstado"
+                        class="form-control">
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</section>

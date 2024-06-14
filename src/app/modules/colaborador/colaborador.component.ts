@@ -11,16 +11,19 @@ import { Cliente, ClienteResult } from '../../interfaces/cliente';
 import { Observable, of } from 'rxjs';
 import { DepartamentoResult, MunicipioDeptResult } from '../../interfaces/municipio';
 import { MunicipioService } from '../../services/municipio.service';
+import { EmpleadoService } from '../../services/empleado.service';
 
 @Component({
-  selector: 'app-cliente',
+  selector: 'app-colaborador',
   standalone: true,
   imports: [AsyncPipe, CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './cliente.component.html',
-  styleUrl: './cliente.component.css',
+  templateUrl: './colaborador.component.html',
+  styleUrl: './colaborador.component.css',
 })
-export class ClienteComponent implements OnInit {
+export class ColaboradorComponent implements OnInit {
   public clienteForm!: FormGroup;
+  public empleadoForm!: FormGroup;
+  public personaCreada!: Observable<ClienteResult>;
 
   public clienteList$!: Observable<ClienteResult>;
   public departamentoList$!: Observable<DepartamentoResult>;
@@ -35,29 +38,41 @@ export class ClienteComponent implements OnInit {
   public detallesCliente: boolean = false;
   public modificarCliente: boolean = false;
   public seccionCrear: boolean = false;
+  public seccionCrearEmpleado: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private clienteService: ClienteService,
-    private municipioServices: MunicipioService
+    private municipioServices: MunicipioService,
+    private empleadoServices: EmpleadoService
   ) {}
 
   ngOnInit(): void {
+    this.clienteForm = this.fb.group({
+      Nombre: [''],
+      Apellido: [''],
+      FechaNacimiento: [''],
+      Sexo: [''],
+      CodTipoIdentificacion: [''],
+      NumeroIdentificacion: [''],
+      Telefono: [''],
+      Correo: [''],
+      Direccion: [''],
+      CodMunicipio: [''],
+      CodDepartamento: [''],
+    });
 
-        this.clienteForm = this.fb.group({
-          Nombre: ['',],
-          Apellido: ['',],
-          FechaNacimiento: ['',],
-          Sexo: ['',],
-          CodTipoIdentificacion: ['',],
-          NumeroIdentificacion: ['',],
-          Telefono: ['',],
-          Correo: ['',],
-          Direccion: ['',],
-          CodMunicipio: ['',],
-          CodDepartamento: ['',],
-        });
-
+    this.empleadoForm = this.fb.group({
+      UsuarioEmpleado: [''],
+      ClaveEmpleado: [''],
+      CodPersona: [''],
+      Jefe: [''],
+      CodCargo: [''],
+      FechaIngreso: [''],
+      FechaRetiro: [''],
+      CodEstado: [''],
+      CodRol: [''],
+    });
 
     this.getCliente();
     this.getDepartamento();
@@ -65,6 +80,7 @@ export class ClienteComponent implements OnInit {
     this.detallesCliente = false;
     this.modificarCliente = false;
     this.seccionCrear = false;
+    this.seccionCrearEmpleado = false;
 
     this.clienteForm.get('CodDepartamento')?.valueChanges.subscribe((value) => {
       this.departementoCod = value;
@@ -77,6 +93,7 @@ export class ClienteComponent implements OnInit {
     this.detallesCliente = false;
     this.modificarCliente = false;
     this.seccionCrear = false;
+    this.seccionCrearEmpleado = false;
   }
 
   verCrearCliente(): void {
@@ -84,6 +101,7 @@ export class ClienteComponent implements OnInit {
     this.seccionListado = false;
     this.detallesCliente = false;
     this.modificarCliente = false;
+    this.seccionCrearEmpleado = false;
   }
 
   getCliente() {
@@ -133,16 +151,21 @@ export class ClienteComponent implements OnInit {
 
   crearCliente() {
     const dataCliente = this.clienteForm.value;
-    
+
     dataCliente.Sexo = Number(dataCliente.Sexo);
-    dataCliente.CodTipoIdentificacion = Number(dataCliente.CodTipoIdentificacion);
+    dataCliente.CodTipoIdentificacion = Number(
+      dataCliente.CodTipoIdentificacion
+    );
     const { CodDepartamento, ...dataClienteNew } = dataCliente;
-  
+
+    console.log(dataCliente);
     this.clienteService.postCliente$(dataClienteNew).subscribe(
       (response) => {
         if (response.success) {
-          this.getCliente();
           this.successMensaje = response.message;
+          const CodPersona = response.data
+          console.log(CodPersona);
+          this.getCliente()  
           this.clienteForm.reset();
         }
       },
@@ -150,6 +173,19 @@ export class ClienteComponent implements OnInit {
         this.errorMensaje = `${error.error.message} ${error.error.data}`;
       }
     );
+  }
+
+  crearEmpleado() {
+    const dataEmpleado = this.empleadoForm.value;
+    
+    
+    
+    
+    console.log(dataEmpleado);
+
+
+    
+
   }
 
   setModificarCliente(): void {

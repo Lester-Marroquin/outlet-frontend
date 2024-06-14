@@ -1,1 +1,264 @@
-<p>cliente works!</p>
+<!-- Sección de encabezado -->
+<section>
+    <main class="container py-5 bg-light">
+        <h1 class="display-4 text-center">Clientes</h1>
+        <hr class="border-primary">
+
+        <div class="card text-center shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <button type="button" class="btn btn-outline-light" (click)="verListado()">Listar clientes</button>
+                    <button type="button" class="btn btn-outline-light" (click)="verCrearCliente()">Crear
+                        cliente</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+
+<!-- Sección de listado -->
+<section *ngIf="seccionListado" class="py-5 bg-secondary text-white">
+    <div class="container p-4 p-md-5 mb-4 rounded text-body-emphasis bg-dark shadow-sm">
+        <h3 style="color: white;">Listado de clientes</h3>
+        <div class="table-responsive">
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod Persona</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">No. Ident</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="clienteList$ | async as resultclienteList">
+                        <tr *ngFor="let clienteData of resultclienteList.data">
+                            <th scope="row">{{ clienteData.CodPersona }}</th>
+                            <td>{{ clienteData.Nombre }}</td>
+                            <td>{{ clienteData.Apellido }}</td>
+                            <td>{{ clienteData.Correo }}</td>
+                            <td>{{ clienteData.Telefono }}</td>
+                            <td>{{ clienteData.NumeroIdentificacion }}</td>
+                            <td>
+                                <button class="btn btn-outline-success btn-sm" (click)="editarCliente(clienteData)">
+                                    Editar <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Detalles -->
+<section *ngIf="detallesCliente" class="py-5 bg-light">
+    <div class="container p-4 p-md-5 mb-4 rounded bg-white shadow-sm">
+        <div class="row">
+            <div class="col-md-12 text-start">
+                <h3>Detalles del cliente</h3>
+                <p>Código: {{ clienteItem.CodPersona }}</p>
+                <p>Nombre: {{ clienteItem.Nombre }}</p>
+                <p>Apellido: {{ clienteItem.Apellido }}</p>
+                <p>Correo: {{ clienteItem.Correo }}</p>
+                <p>Telefono: {{ clienteItem.Telefono }}</p>
+                <p>No. Ident: {{ clienteItem.NumeroIdentificacion }}</p>
+                <button class="btn btn-warning btn-sm"
+                    (click)="modificarCliente = true; seccionListado = false; clienteModificado = clienteItem">
+                    Modificar cliente <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+                <button class="btn btn-info btn-sm"
+                    (click)="detallesCliente = false; modificarCliente = false; seccionListado = true;">
+                    Volver al listado <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="errorMensaje" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>Error recibido: </strong> {{ errorMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="errorMensaje=''"></button>
+        </div>
+        <div *ngIf="successMensaje" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <strong>Mensaje recibido: </strong> {{ successMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="successMensaje=''"></button>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de Modificación -->
+<section *ngIf="modificarCliente" class="py-5 bg-secondary text-white">
+    <div class="container bg-dark p-4 rounded shadow-sm">
+        <h3 class="text-center">Modificación de datos de cliente</h3>
+        <hr class="border-primary">
+
+        <form (ngSubmit)="setModificarCliente()" class="login-auth-form">
+            <div class="mb-3 row">
+                <label for="CodPersona" class="col-form-label col-md-4 text-md-end">Cod. Cliente:</label>
+                <div class="col-md-6">
+                    <span class="form-control-plaintext">{{ clienteModificado.CodPersona }}</span>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Nombre" class="col-form-label col-md-4 text-md-end">Nombre:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="clienteModificado.Nombre" name="Nombre" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Apellido" class="col-form-label col-md-4 text-md-end">Apellido:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="clienteModificado.Apellido" name="Apellido" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Correo" class="col-form-label col-md-4 text-md-end">Correo:</label>
+                <div class="col-md-6">
+                    <input type="email" [(ngModel)]="clienteModificado.Correo" name="Correo" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="Telefono" class="col-form-label col-md-4 text-md-end">Telefono:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="clienteModificado.Telefono" name="Telefono" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="NumeroIdentificacion" class="col-form-label col-md-4 text-md-end">Número
+                    Identificación:</label>
+                <div class="col-md-6">
+                    <input type="text" [(ngModel)]="clienteModificado.NumeroIdentificacion" name="NumeroIdentificacion"
+                        class="form-control">
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Sección de Creación -->
+<section *ngIf="seccionCrear" class="py-5 bg-light">
+    <div class="container bg-white p-4 rounded shadow-sm">
+        <h3 class="text-center">Creación de Cliente</h3>
+        <form [formGroup]="clienteForm" (ngSubmit)="crearCliente()" class="row g-3">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Nombre" class="form-label">Nombre de cliente:</label>
+                    <input type="text" class="form-control" id="Nombre" formControlName="Nombre">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Apellido" class="form-label">Apellido:</label>
+                    <input type="text" class="form-control" id="Apellido" formControlName="Apellido">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="FechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                    <input type="date" class="form-control" id="FechaNacimiento" formControlName="FechaNacimiento">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Sexo" class="form-label">Sexo:</label>
+                    <select class="form-control" id="Sexo" formControlName="Sexo">
+                        <option value='1'>Hombre</option>
+                        <option value='0'>Mujer</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="CodTipoIdentificacion" class="form-label">Tipo de Identificación:</label>
+                    <select class="form-control" id="CodTipoIdentificacion" formControlName="CodTipoIdentificacion">
+                        <option selected value="" disabled>Seleccione una opción</option>
+                        <option value="1">NIT</option>
+                        <option value="2">DPI</option>
+                        <option value="3">Licencia</option>
+                        <option value="4">Pasaporte</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="NumeroIdentificacion" class="form-label">Número de Identificación:</label>
+                    <input type="text" class="form-control" id="NumeroIdentificacion"
+                        formControlName="NumeroIdentificacion">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Telefono" class="form-label">Teléfono:</label>
+                    <input type="text" class="form-control" id="Telefono" formControlName="Telefono">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Correo" class="form-label">Correo:</label>
+                    <input type="email" class="form-control" id="Correo" formControlName="Correo">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="Direccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="Direccion" formControlName="Direccion">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="CodDepartamento" class="form-label">Departamento:</label>
+                    <select formControlName="CodDepartamento" class="form-select">
+                        <option value="" disabled selected>Seleccione un departamento</option>
+                        <ng-container *ngIf="departamentoList$ | async as resultDepartamentoList">
+                            <ng-container *ngFor="let departamentoItem of resultDepartamentoList.data">
+                                <option [value]="departamentoItem.CodDepartamento">{{ departamentoItem.Departamento }}
+                                </option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="CodMunicipio" class="form-label">Municipio:</label>
+                    <select formControlName="CodMunicipio" class="form-select">
+                        <option value="" disabled selected>Seleccione un municipio</option>
+                        <ng-container *ngIf="municipioList$ | async as resultMunicipioList">
+                            <ng-container *ngFor="let municipioItem of resultMunicipioList.data">
+                                <option [value]="municipioItem.CodMunicipio">{{ municipioItem.Municipio }}</option>
+                            </ng-container>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success">Crear Cliente</button>
+            </div>
+        </form>
+
+        <div *ngIf="errorMensaje" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>Mensaje recibido: </strong> {{ errorMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="errorMensaje=''"></button>
+        </div>
+        <div *ngIf="successMensaje" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            <strong>Mensaje recibido: </strong> {{ successMensaje }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                (click)="successMensaje=''"></button>
+        </div>
+    </div>
+</section>

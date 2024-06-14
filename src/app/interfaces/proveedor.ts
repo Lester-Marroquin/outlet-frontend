@@ -1,6 +1,6 @@
 export interface Proveedor {
 
-    CodProveedor: number;
+    CodProveedor?: number;
     RazonSocial: string;
     NombreComercial: string;
     CodTipoIdentificacion: number;

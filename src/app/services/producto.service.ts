@@ -23,6 +23,18 @@ export class ProductoService {
     );
   }
 
+  getProductoId(id: number): Observable<ProductoResult> {
+    return this.http
+      .get<ProductoResult>(`${this.URL}/producto/${id}`)
+      .pipe(
+        map((response) => ({
+          success: response.success,
+          message: response.message,
+          data: response.data,
+        }))
+      );
+  }
+
   getProductoPorCategoria$(id: number): Observable<ProductoResult> {
     return this.http
       .get<ProductoResult>(`${this.URL}/productoPorCategoria/${id}`)

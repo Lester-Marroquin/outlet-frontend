@@ -1,0 +1,118 @@
+<section class="py-5 bg-light">
+    <main class="container">
+
+        <div class="text-center">
+            <h1 class="display-4">Registro de venta</h1>
+            <hr class="my-4">
+        </div>
+
+        <div class="card text-center shadow-sm mb-4">
+
+        </div>
+
+    </main>
+</section>
+
+<section>
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="row row-cols-1 row-cols-md-2 g-4 table-responsive">
+
+
+
+            <div class="mb-3">
+                <h4>Cliente</h4>
+                <input #codClienteInput type="number" class="form-control" placeholder="Codigo de cliente"
+                    aria-label="CodCliente" aria-describedby="button-addon2">
+                <br>
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                    (click)="buscarCliente(codClienteInput.value)">
+                    <i class="fa-solid fa-magnifying-glass"></i> Cliente
+                </button>
+            </div>
+
+            <div class="mb-3" *ngIf="clienteItem">
+                <h4>Detalles del Cliente</h4>
+                <div>
+                    <p> Nombre: <strong> {{ clienteItem.Nombre }} {{ clienteItem.Apellido }} </strong></p>
+                    <p>{{ clienteItem.TipoIdentificacion }} No.: {{clienteItem.NumeroIdentificacion}}</p>
+                    <p>Direccion: {{ clienteItem.Direccion }}, {{clienteItem.Municipio}}</p>
+                    <p></p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6">
+                <div class="mb-3">
+                    <h4>Producto</h4>
+                    <input #codClienteInput type="number" class="form-control" placeholder="Codigo de cliente"
+                        aria-label="CodCliente" aria-describedby="button-addon2">
+                    <br>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                        (click)="buscarCliente(codClienteInput.value)">
+                        <i class="fa-solid fa-magnifying-glass"></i> P
+                    </button>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <div class="row">
+            <h4>Productos</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Cod. Producto</th>
+                            <th>Cantidad</th>
+                            <th>Producto</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of rows; let i = index">
+                            <td><input [(ngModel)]="row.col1" class="form-control" /></td>
+                            <td><input [(ngModel)]="row.col2" class="form-control"
+                                    (ngModelChange)="calculateSubtotal(row)" /></td>
+                            <td><input [(ngModel)]="row.col3" class="form-control" /></td>
+                            <td><input [(ngModel)]="row.col4" class="form-control"
+                                    (ngModelChange)="calculateSubtotal(row)" /></td>
+                            <td><input [(ngModel)]="row.col5" class="form-control" readonly /></td>
+                            <td>
+                                <button class="btn btn-success" (click)="addRow()"><i
+                                        class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-danger" (click)="removeRow(i)"><i
+                                        class="fa-solid fa-minus"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6 mt-3">
+                <h5>Totales</h5>
+                <div>
+                    <p>Sub-total: <strong>{{ partialValue | currency: 'GTQ' }} </strong></p>
+                    <p>IVA (12%): <strong> {{ taxes | currency: 'GTQ' }}</strong></p>
+                    <p>Total: <strong> {{ totalValue | currency: 'GTQ' }} </strong></p>
+                </div>
+            </div>
+
+            <br>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                >Guardar Factura
+            </button>
+            <!-- <input #codProductoInput [(ngModel)]="row.col1" class="form-control" type="number" aria-describedby="button-addon2" />
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                (click)="buscarProducto(codProductoInput.value)">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button> -->
+
+
+        </div>
+    </div>
+</section>
